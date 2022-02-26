@@ -55,7 +55,7 @@ def crossover(parents, fitness, population):
         children (4D array): next generation features, [population_size - 1 x n_features]
     """
     _, nchannels, h, w = population.shape
-    fitness_pairs = fitness[parents.long()].view(-1, 2)
+    fitness_pairs = fitness[parents.long()].view(-1, 2)#把fitness重排布成 *2列
     prob = fitness_pairs[:, 0] / fitness_pairs.sum(1)
     parental_bernoulli = td.Bernoulli(prob)  
     inherit_mask = parental_bernoulli.sample_n(nchannels * h * w)  # [N-1, nchannels * h * w]
